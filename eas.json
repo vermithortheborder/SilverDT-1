@@ -23,6 +23,7 @@
       }
     },
     "production": {
+      "autoInstall": false,
       "ios": {
         "node": "20.19.4"
       },

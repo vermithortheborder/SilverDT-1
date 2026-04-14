@@ -33,11 +33,7 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "permissions": [
-        "android.permission.CAMERA",
-        "android.permission.RECORD_AUDIO"
-      ]
+      }
     },
     "web": {
       "bundler": "metro",
@@ -66,10 +62,10 @@
       "typedRoutes": true
     },
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "318c6355-4009-428f-896f-070c8227aabc"
-      }
+      "router": {}
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }

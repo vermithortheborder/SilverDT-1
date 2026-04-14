@@ -1,74 +1,86 @@
-import { useAuth } from "@/utils/auth/useAuth";
-import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AppThemeProvider } from "@/components/AppTheme";
-import { AuthModal } from "@/utils/auth/useAuthModal";
+import { Tabs } from "expo-router";
 import {
-  useFonts,
-  Sora_400Regular,
-  Sora_600SemiBold,
-  Sora_800ExtraBold,
-} from "@expo-google-fonts/sora";
+  Home,
+  BookOpen,
+  Calendar,
+  ShoppingCart,
+  User,
+  ShoppingBag,
+} from "lucide-react-native";
+import { useAppTheme } from "@/components/AppTheme";
 
-SplashScreen.preventAutoHideAsync();
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60 * 5,
-      cacheTime: 1000 * 60 * 30,
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
-
-export default function RootLayout() {
-  const { initiate, isReady } = useAuth();
-
-  // Load fonts once at the root level
-  const [fontsLoaded, fontError] = useFonts({
-    Sora_400Regular,
-    Sora_600SemiBold,
-    Sora_800ExtraBold,
-  });
-
-  useEffect(() => {
-    initiate();
-  }, [initiate]);
-
-  useEffect(() => {
-    if (fontError) {
-      console.error("Error loading fonts:", fontError);
-    }
-    // Ocultar splash cuando auth esté listo Y (fuentes cargadas O hubo error de fuentes)
-    if (isReady && (fontsLoaded || fontError)) {
-      SplashScreen.hideAsync();
-    }
-  }, [isReady, fontsLoaded, fontError]);
-
-  // Permitir continuar si auth está listo Y (fuentes cargadas O hubo error)
-  if (!isReady || (!fontsLoaded && !fontError)) {
-    return null;
-  }
+export default function TabLayout() {
+  const { colors, isDark } = useAppTheme();
 
   return (
-    <AppThemeProvider>
-      <QueryClientProvider client={queryClient}>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <AuthModal />
-          <Stack
-            screenOptions={{ headerShown: false }}
-            initialRouteName="index"
-          >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-        </GestureHandlerRootView>
-      </QueryClientProvider>
-    </AppThemeProvider>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: colors.cardBackground,
+          borderTopWidth: 1,
+          borderTopColor: colors.border,
+          paddingBottom: 4,
+          paddingTop: 4,
+        },
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.secondary,
+        tabBarShowLabel: true,
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "600",
+        },
+        tabBarItemStyle: {
+          paddingVertical: 0,
+        },
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: "Inicio",
+          tabBarIcon: ({ color, size }) => <Home color={color} size={12} />,
+        }}
+      />
+      <Tabs.Screen
+        name="courses"
+        options={{
+          title: "Mis Cursos",
+          tabBarIcon: ({ color, size }) => <BookOpen color={color} size={12} />,
+        }}
+      />
+      <Tabs.Screen
+        name="shop"
+        options={{
+          title: "Tienda",
+          tabBarIcon: ({ color, size }) => (
+            <ShoppingBag color={color} size={12} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="schedule"
+        options={{
+          title: "Agenda",
+          tabBarIcon: ({ color, size }) => <Calendar color={color} size={12} />,
+        }}
+      />
+      <Tabs.Screen
+        name="cart"
+        options={{
+          title: "Carrito",
+          tabBarIcon: ({ color, size }) => (
+            <ShoppingCart color={color} size={12} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: "Perfil",
+          tabBarIcon: ({ color, size }) => <User color={color} size={12} />,
+        }}
+      />
+    </Tabs>
   );
 }
