@@ -37,7 +37,8 @@
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.createinc.d98e3b4a468742d59b6f8d0ccb88677a"
     },
     "web": {
       "bundler": "metro",
