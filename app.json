@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "silverdogtrainingapp.d98e3b4a-4687-42d5-9b6f-8d0ccb88677a",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "newArchEnabled": false,
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
@@ -27,7 +27,7 @@
         "ITSAppUsesNonExemptEncryption": false
       },
       "bundleIdentifier": "com.createinc.d98e3b4a468742d59b6f8d0ccb88677a",
-      "buildNumber": "1"
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
